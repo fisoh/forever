@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>dice game</title>
+	 <link rel="stylesheet" type="text/css" href="dice css.css">
+	 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Architect+Daughter&display=swap" >
+</head>
+<body class="text-center">
+
+   <div class="heading">
+   	  <input type="text" placeholder="challenger name" class="insert"><br>
+   	  <button class="btn btn-success btn lg myname">enter</button>
+   </div>
+  <section>
+   <div class="row">
+   	 <div class="col-5">
+   	  <h1>CONNEG</h1>
+   	  <h1>(the contender)</h1>
+   	  <img class="player1" src="images/dice1.png" width="200px" height="200px">
+
+   	  <h1 class="score1"></h1>
+   	</div>
+   	<div class="col-2">
+   		<h1 class="vs">VS</h1>
+   		<h1 class="rounds"></h1>
+   	</div>
+   	 <div class="col-5">
+   	 	<h1 class="challenger">?</h1>
+   	 	<h1>(the challenger)</h1>
+   	 	<img class="player2" src="images/dice1.png" width="200px" height="200px">
+   	 
+   	 	<h1 class="score2"></h1>
+   	 </div>
+   </div>
+
+   <div> 
+      <button type="button" class="play btn btn-primary btn-lg" ><img src="icons/play.svg" width="20px" height="20px">  play</button>
+   </div>
+
+  <div>
+	<h3></h3>
+  </div>
+</section>
+
+<div class="footer text-center">
+ <h4>proudly made with love by SIFISO from CONNEG</h4>
+</div>
+<div class="text-center">
+	<img src="images/new logo.svg" width="300px" height="300px">
+</div>
+
+<div id="winner">
+	<h1 style="color: red;">CONGRATULATIONS!!!</h1>
+	<img src="images/cup.png" width="200px" height="200px">
+	<P >you have won a match against the best in the game,
+	      you are one of the best now...SUPER</P>
+	<button class="btn btn-warning btn-lg" onclick="window.location.reload()">play again</button>
+</div>
+<div id="loser">
+	<h1 style="color: red;">SORRY!!! LOOSER</h1>
+	<p> you didn't stand a chance against the mighty alian king CONNEG.</p>
+	<button class="btn btn-warning btn-lg" onclick="window.location.reload()">play again</button>
+</div>
+<div id="draw">
+  <h1 style="color: green;">its a DRAW</h1>
+  <p>what a game of 2 dice masters</p>
+  <button class="btn btn-warning btn-lg" onclick="window.location.reload()">play again</button>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+  
+  $('.play, #winner,#loser, #draw').hide();
+});
+
+document.querySelector('.myname').addEventListener('click', function() {
+
+     var name = document.querySelector('input').value;
+     var thatname = name.toUpperCase();
+     if(name===''){
+      alert('please enter your name on the input box');
+    }else{
+     document.querySelector('.challenger').innerHTML= thatname;
+     $('.heading').hide(1000);
+     $('.play').show();
+   };
+
+});
+
+
+
+
+document.querySelector('.play').addEventListener('click', function() {
+	play();
+    
+      var player1Score = score1.reduce(scored);
+      var player2Score = score2.reduce(scored);
+       document.querySelector('.score1').innerHTML = 'score:'+player1Score * 100;
+       document.querySelector('.score2').innerHTML = 'score:'+player2Score * 100;
+     var round= score1.length;
+	 document.querySelector('.rounds').innerHTML= 'round: '+round;
+    
+   if(round===10  &&  player2Score>player1Score ){
+   	$('section').hide();
+   	$('#winner').show();
+   }else if(round===10 && player1Score>player2Score){
+   	$('section').hide();
+    $('#loser').show();
+   }else if(round===10 && player1Score==player2Score){
+      $('section').hide();
+      $('#draw').show();
+   };
+      
+});
+
+
+var score1 = [];
+var score2 = [];
+var challenge = document.querySelector('.challenger').innerHTML;
+function play() {
+	
+	var  imagedice =  Math.floor(Math.random()*6)+1;
+	var imagediced = 'images/dice'+ imagedice+'.png';
+	document.querySelectorAll('img')[0].setAttribute('src', imagediced);
+	score1.push(imagedice);
+
+   
+	var  imagedice2 =  Math.floor(Math.random()*6)+1;
+	var  imagediced2 = 'images/dice'+ imagedice2+'.png';
+    document.querySelectorAll('img')[1].setAttribute('src', imagediced2);
+    score2.push(imagedice2);
+
+
+   if (imagedice>imagedice2) {
+      	document.querySelector('h3').innerHTML = 'CONTENDER WINS';
+      }else if(imagedice2>imagedice){
+      	document.querySelector('h3').innerHTML = 'CHALLENGER'+' '+'WINS';
+      }else{
+      	document.querySelector('h3').innerHTML = 'draw';
+      };
+
+
+};
+
+function scored(total, num) {
+		return total+num;
+
+	};	
+
+
+	
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
